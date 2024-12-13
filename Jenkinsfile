@@ -4,18 +4,17 @@ pipeline {
     stages {
         stage('Deploy To Kubernetes') {
             steps {
-                // Use the correct Kubernetes credentials stored in Jenkins
-                withKubeCredentials(credentialsId:k8-token) {
-                    sh "kubectl apply -f deployment-service.yml --validate=false"
+               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'DEV-ENV', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'dev-env-dns-3ompk1cb.hcp.centralindia.azmk8s.io']]) {
+                    sh "kubectl apply -f deployment-service.yml"
                 }
             }
         }
         
         stage('Verify Deployment') {
             steps {
-                // Use the correct Kubernetes credentials again for verification
-                withKubeCredentials(credentialsId:k8-token) {
-                    sh "kubectl get svc -n default"
+              withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'DEV-ENV', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'dev-env-dns-3ompk1cb.hcp.centralindia.azmk8s.io']]) {
+                    sh "kubectl get svc -n webapps"
+                    }
                 }
             }
         }
