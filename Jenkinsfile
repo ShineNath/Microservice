@@ -11,12 +11,4 @@ pipeline {
             }
         }
         
-        stage('verify Deployment') {
-            steps {
-               withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'DEV-ENV', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'dev-env-dns-acy6inej.hcp.centralindia.azmk8s.io']]) {
-                    sh "kubectl get svc -n webapps"
-                }
-            }
-        }
-    }
-}
+   
