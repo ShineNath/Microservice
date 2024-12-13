@@ -5,7 +5,7 @@ pipeline {
         stage('Deploy To Kubernetes') {
             steps {
                withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'DEV-ENV', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'dev-env-dns-acy6inej.hcp.centralindia.azmk8s.io']]) {
-                    sh "kubectl apply -f depoyment-service.yml"
+                    sh "kubectl apply -f deployment-service.yml"
                     sleep 60
                 }
             }
